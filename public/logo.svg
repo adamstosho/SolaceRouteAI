@@ -1,0 +1,46 @@
+<svg width="240" height="60" viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- CSS Animations -->
+  <style>
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 1; }
+    }
+    @keyframes flow {
+      0% { stroke-dashoffset: 20; }
+      100% { stroke-dashoffset: 0; }
+    }
+    @keyframes drift {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-1px); }
+    }
+    .node { animation: pulse 3s infinite ease-in-out; transform-origin: center; }
+    .path { stroke-dasharray: 20; animation: flow 2s infinite linear; }
+    .logo-text { font-family: 'Inter', system-ui, sans-serif; font-weight: 600; }
+  </style>
+
+  <!-- Pin Icon Group -->
+  <g transform="translate(10, 5)">
+    <!-- Pin Background -->
+    <path d="M25 50C25 50 45 35 45 22.5C45 10 35 0 25 0C15 0 5 10 5 22.5C5 35 25 50 25 50Z" fill="#0D1B2A"/>
+    
+    <!-- Circuit Tree / Path -->
+    <g transform="translate(25, 25)">
+      <!-- Trunk -->
+      <path class="path" d="M0 15V0" stroke="#1D9E75" stroke-width="3" stroke-linecap="round"/>
+      
+      <!-- Branches -->
+      <path class="path" d="M0 0C5 -5 10 -5 12 -12" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round" style="animation-delay: -0.5s;"/>
+      <path class="path" d="M0 0C-5 -5 -10 -5 -12 -8" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round" style="animation-delay: -1s;"/>
+      <path class="path" d="M0 0V-15" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round" style="animation-delay: -1.5s;"/>
+      
+      <!-- Nodes -->
+      <circle class="node" cx="12" cy="-12" r="3" fill="#1D9E75" style="animation-delay: 0s;"/>
+      <circle class="node" cx="-12" cy="-8" r="3" fill="#1D9E75" style="animation-delay: 0.5s;"/>
+      <circle class="node" cx="0" cy="-15" r="4" fill="#1D9E75" style="animation-delay: 1s;"/>
+      <circle class="node" cx="0" cy="0" r="2.5" fill="#FFFFFF" opacity="0.9"/>
+    </g>
+  </g>
+
+  <!-- Logo Text -->
+  <text x="65" y="40" class="logo-text" style="font-size: 28px; fill: #0D1B2A;">SolaceRoute<tspan fill="#1D9E75">AI</tspan></text>
+</svg>

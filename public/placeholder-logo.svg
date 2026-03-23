@@ -1,0 +1,36 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .path-main {
+      stroke: #1D9E75;
+      stroke-width: 12;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      animation: draw 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards, pulse 4s ease-in-out 2.5s infinite;
+    }
+    .node {
+      fill: #1D9E75;
+      opacity: 0;
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+    .node-1 { animation-delay: 1s; }
+    .node-2 { animation-delay: 1.5s; }
+    .node-3 { animation-delay: 2s; }
+
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    @keyframes pulse {
+      0%, 100% { filter: drop-shadow(0 0 2px rgba(29, 158, 117, 0.4)); }
+      50% { filter: drop-shadow(0 0 8px rgba(29, 158, 117, 0.7)); }
+    }
+  </style>
+  <path class="path-main" d="M50 130C50 130 60 110 90 110C120 110 130 90 130 70C130 50 110 40 90 40C70 40 50 55 50 80C50 105 70 120 90 140C110 160 130 150 130 150" />
+  <circle class="node node-1" cx="50" cy="130" r="6" />
+  <circle class="node node-2" cx="90" cy="40" r="6" />
+  <circle class="node node-3" cx="130" cy="150" r="6" />
+</svg>

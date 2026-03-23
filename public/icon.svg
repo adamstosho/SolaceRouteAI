@@ -1,0 +1,18 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+    .node { animation: pulse 3s infinite ease-in-out; transform-origin: center; }
+  </style>
+  <path d="M32 60C32 60 56 42 56 27C56 12 45.2548 0 32 0C18.7452 0 8 12 8 27C8 42 32 60 32 60Z" fill="#0D1B2A"/>
+  <g transform="translate(32, 30)">
+    <path d="M0 16V0" stroke="#1D9E75" stroke-width="4" stroke-linecap="round"/>
+    <path d="M0 0C8 -6 14 -14 14 -14" stroke="#1D9E75" stroke-width="3" stroke-linecap="round"/>
+    <path d="M0 0C-8 -6 -14 -10 -14 -10" stroke="#1D9E75" stroke-width="3" stroke-linecap="round"/>
+    <circle class="node" cx="14" cy="-14" r="4" fill="#1D9E75"/>
+    <circle class="node" cx="-14" cy="-10" r="4" fill="#1D9E75"/>
+    <circle class="node" cx="0" cy="-18" r="5" fill="#1D9E75"/>
+  </g>
+</svg>
