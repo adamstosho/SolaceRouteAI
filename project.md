@@ -49,3 +49,33 @@ Palmer, A. (2025, August 11). Technology has fuelled overtourism – now it coul
 Rosário, A. T., & Dias, J. C. (2024). Exploring the landscape of smart tourism: A systematic bibliometric review of the literature of the Internet of Things. Administrative Sciences, 14(2), 22. https://doi.org/10.3390/admsci14020022
 UNESCO. (n.d.). UNESCO World Heritage and sustainable tourism programme. https://whc.unesco.org/en/tourism/
 Weber, F. (2017). Overtourism: An analysis of contextual factors contributing to negative developments in overcrowded tourism destinations. In Proceedings of BEST EN Think Tank XVII: Innovation and progress in sustainable tourism (pp. 315–320).
+
+## Ethical Implementation Strategy
+
+In responding to common concerns regarding data privacy and surveillance in smart tourism (Choudhary & Sharma, 2024), **SolaceRouteAI** adopts a “Privacy by Design” framework. The ethical integrity of the tool is grounded in three core principles:
+
+1.  **Anonymized Data Aggregation**: The system does not collect or store personally identifiable information (PII). It operates on aggregated crowd counts (e.g., “150 people present”) rather than tracking individual device identities. This ensures that while destination flow is optimized, individual autonomy is preserved.
+2.  **Decentralized Data Management**: Unlike traditional cloud-based apps, SolaceRouteAI stores the user’s personal itinerary and preferences locally on their own device. By keeping the “search history” of the tourist off a central server, we eliminate the risk of a mass data breach or unauthorized profiling.
+3.  **Democratic Transparency**: All AI-driven suggestions are accompanied by a rationale (e.g., “Suggested due to 40min wait time at primary site”). This ensures that the user remains the ultimate decision-maker, and technology acts as a consultant rather than a controller.
+
+## G: Business Model: The Sustainability Ecosystem
+
+SolaceRouteAI is positioned as a **Mission-Driven SaaS (Software-as-a-Service)** platform. To ensure long-term viability and impact, the app employs a multi-sided revenue model that aligns the incentives of tourists, businesses, and city governments:
+
+1.	**B2G (Business-to-Government) - The "Smart City" Subscription:**
+	*	**The Client:** Municipalities (e.g., Barcelona City Council) and DMOs.
+	*	**The Value:** Overtourism causes significant infrastructure wear, environmental degradation, and local population displacement. SolaceRouteAI acts as a "Digital Valve" to redirect visitor flows.
+	*	**Revenue:** An annual licensing fee for the **DMO Dashboard**, providing predictive analytics, policy-simulation tools, and "Emergency Rerouting" capabilities.
+
+2.	**B2B (Business-to-Business) - The "Hidden Gem" Exposure Fee:**
+	*	**The Client:** Small-to-medium enterprises (SMEs) located in under-visited neighborhoods (e.g., Gràcia, Poble-sec).
+	*	**The Value:** These businesses suffer from being "hidden" from the main tourist corridors. SolaceRouteAI provides them with direct access to "Solace-seeking" tourists.
+	*	**Revenue:** A performance-based **Lead Generation Fee**. Partner businesses pay a small commission for every customer who redeems a "Solace Reward" voucher at their location.
+
+3.	**B2C (Business-to-Consumer) - The "Conscious Traveler" Premium Tier:**
+	*	**The Client:** High-value, sustainability-minded tourists.
+	*	**The Value:** While the core routing engine remains free to maximize crowd-management impact, a **"Solace Prime"** one-time pass ($4.99 per city) offers enhanced utility.
+	*	**Revenue:** Premium features include Offline Map Sync, Priority Rerouting (being first to get a reroute option for at-capacity sites), and exclusive "Curated Trails" (e.g., "The Architectural Solace Trail").
+
+### Summary of Impact
+This "Tri-Side" model ensures that **SolaceRouteAI** is not just an expense for the traveler, but an **investment** for the city and a **growth engine** for the local culture. It represents a "Positive Sum Game" where everyone—from the resident to the visitor—benefits from a balanced, peaceful city.

@@ -2,7 +2,13 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, Languages } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 interface TopAppBarProps {
   title: string;
@@ -57,9 +63,25 @@ export const TopAppBar = ({
           </div>
         </div>
       </div>
-      {rightAction && (
-        <div className="flex shrink-0 items-center">{rightAction}</div>
-      )}
+      <div className="flex shrink-0 items-center gap-1">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button
+              type="button"
+              className="rounded-xl p-2 text-foreground transition-colors hover:bg-muted/80"
+              aria-label="Select language"
+            >
+              <Languages className="h-5 w-5" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-[120px]">
+            <DropdownMenuItem className="font-medium">English</DropdownMenuItem>
+            <DropdownMenuItem>Español</DropdownMenuItem>
+            <DropdownMenuItem>Català</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        {rightAction}
+      </div>
     </motion.header>
   );
 };

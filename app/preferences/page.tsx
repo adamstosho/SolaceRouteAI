@@ -313,12 +313,40 @@ export default function PreferencesPage() {
         </Reveal>
 
         <Reveal delay={8}>
-          <div className="flex gap-3 rounded-xl border border-border/50 bg-muted/30 p-3">
-            <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-            <p className="text-xs leading-relaxed text-muted-foreground">
-              Your data is anonymised and never sold. Preferences stay on this
-              device until you clear them.
-            </p>
+          <div className="space-y-4">
+            <h2 className="font-display text-sm font-semibold text-foreground">
+              Privacy & Data Ethics
+            </h2>
+            <div className="rounded-xl border border-border/70 bg-card/50 p-4">
+              <div className="flex items-start justify-between gap-4">
+                <div className="space-y-1">
+                  <p className="text-sm font-semibold text-foreground">
+                    Anonymized Crowd Contribution
+                  </p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Allow SolaceRouteAI to send your anonymized location signals to 
+                    the city DMO to help other travelers avoid crowds. 
+                    <span className="block mt-1 font-medium text-primary underline">Learn about our Ethics Policy</span>
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={true}
+                  className="relative h-6 w-11 shrink-0 rounded-full bg-primary transition-colors"
+                >
+                  <span className="absolute top-1 left-6 h-4 w-4 rounded-full bg-white shadow transition-transform" />
+                </button>
+              </div>
+            </div>
+            
+            <div className="flex gap-3 rounded-xl border border-primary/20 bg-primary/5 p-3">
+              <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+              <p className="text-xs leading-relaxed text-muted-foreground">
+                <span className="font-bold text-primary">Privacy by Design:</span> Your preferences and itineraries are stored locally on this device. 
+                They are never uploaded to a central cloud, keeping your personal search history 100% private.
+              </p>
+            </div>
           </div>
         </Reveal>
 

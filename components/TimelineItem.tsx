@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Attraction } from '@/lib/mockData';
-import { Clock, MapPin, Sparkles, ChevronUp, ChevronDown } from 'lucide-react';
+import { Clock, MapPin, Sparkles, ChevronUp, ChevronDown, CloudSun, Utensils, Car, Gift } from 'lucide-react';
 import { CrowdBadge } from './CrowdBadge';
 
 interface TimelineItemProps {
@@ -38,6 +38,28 @@ export const TimelineItem = ({
         : `Approx. ${hours.toFixed(1)} hours`
       : `Approx. ${attraction.estTime} min`;
 
+  // Simulated live data for the prototype
+  const liveInsights = [
+    {
+      icon: CloudSun,
+      text: "22°C · Sunny",
+      visible: attraction.category === 'Nature' || attraction.category === 'Architecture'
+    },
+    {
+      icon: Utensils,
+      text: "Local Tip: Tapas bar nearby is quiet",
+      visible: attraction.category === 'Heritage' || attraction.category === 'Food & Drink'
+    },
+    {
+      icon: Car,
+      text: "Traffic: Light flow on Via Laietana",
+      visible: attraction.id === 'bcn-1' || attraction.id === 'bcn-4'
+    }
+  ].filter(i => i.visible);
+
+  // Incentive logic: Quiet places get vouchers!
+  const hasVoucher = attraction.crowdLevel <= 2;
+
   return (
     <motion.div
       className="relative flex gap-4 pb-2"
@@ -63,9 +85,17 @@ export const TimelineItem = ({
       </div>
 
       <div className="min-w-0 flex-1 pt-0.5">
-        <p className="mb-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
-          {startTime}
-        </p>
+        <div className="mb-1.5 flex items-center justify-between">
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+            {startTime}
+          </p>
+          {liveInsights[0] && (
+            <div className="flex items-center gap-1 text-[0.65rem] font-bold text-muted-foreground/80">
+              {React.createElement(liveInsights[0].icon, { className: "h-3 w-3" })}
+              {liveInsights[0].text}
+            </div>
+          )}
+        </div>
         <motion.div
           className="mb-2 rounded-2xl border border-border/60 bg-card/70 p-3.5 shadow-[0_8px_28px_-12px_oklch(0.2_0.03_158_/_0.15)] backdrop-blur-md"
           whileHover={reduce ? undefined : { y: -2 }}
@@ -73,9 +103,17 @@ export const TimelineItem = ({
         >
           <div className="mb-2 flex flex-wrap items-start justify-between gap-2">
             <div className="min-w-0">
-              <h3 className="font-display text-sm font-semibold text-foreground">
-                {attraction.name}
-              </h3>
+              <div className="flex items-center gap-2">
+                <h3 className="font-display text-sm font-semibold text-foreground">
+                  {attraction.name}
+                </h3>
+                {hasVoucher && (
+                  <span className="flex items-center gap-1 rounded bg-amber-500/10 px-1.5 py-0.5 text-[0.6rem] font-bold text-amber-600 dark:text-amber-400 ring-1 ring-amber-500/20">
+                    <Gift className="h-2.5 w-2.5" />
+                    SOLACE REWARD
+                  </span>
+                )}
+              </div>
               <span className="mt-1 inline-block rounded-full border border-border/60 bg-muted/30 px-2 py-0.5 text-[0.65rem] font-medium text-foreground">
                 {attraction.category}
               </span>
@@ -118,10 +156,30 @@ export const TimelineItem = ({
           </div>
 
           {note ? (
-            <p className="flex gap-1.5 border-t border-border/40 pt-2 text-xs italic leading-relaxed text-primary">
-              <Sparkles className="mt-0.5 h-3 w-3 shrink-0 text-primary/80" />
-              <span>{note}</span>
-            </p>
+            <div className="space-y-2 border-t border-border/40 pt-2">
+              <p className="flex gap-1.5 text-xs italic leading-relaxed text-primary">
+                <Sparkles className="mt-0.5 h-3 w-3 shrink-0 text-primary/80" />
+                <span>{note}</span>
+              </p>
+              
+              {/* Secondary live insights like food/traffic alerts */}
+              {liveInsights.slice(1).map((insight, idx) => (
+                <div key={idx} className="flex items-center gap-2 rounded-lg bg-primary/5 px-2 py-1.5 text-[0.65rem] text-primary-foreground/90 font-medium">
+                  {React.createElement(insight.icon, { className: "h-3 w-3 text-primary" })}
+                  {insight.text}
+                </div>
+              ))}
+              
+              {hasVoucher && (
+                <div className="mt-2 flex items-center justify-between rounded-xl bg-amber-500 px-3 py-2 text-white shadow-sm ring-1 ring-amber-600/20">
+                  <div className="flex items-center gap-2">
+                    <Gift className="h-4 w-4" />
+                    <span className="text-[0.65rem] font-bold uppercase tracking-wider">Claim 20% Solace Discount</span>
+                  </div>
+                  <div className="text-[0.6rem] font-medium opacity-90">CODE: SOLACE24</div>
+                </div>
+              )}
+            </div>
           ) : null}
         </motion.div>
       </div>

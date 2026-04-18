@@ -21,6 +21,7 @@ import {
   Leaf,
   Clock,
   MapPin,
+  Star,
 } from 'lucide-react';
 
 export default function ThankYouPage() {
@@ -173,13 +174,30 @@ export default function ThankYouPage() {
       </main>
 
       <div className="fixed-bottom-action-bar">
-        <div className="mx-auto w-full max-w-lg space-y-2">
-          <Button size="lg" fullWidth onClick={handleNewTrip}>
-            Plan tomorrow →
-          </Button>
-          <Button variant="ghost" size="lg" fullWidth onClick={() => router.push('/heatmap')}>
-            Back to map
-          </Button>
+        <div className="mx-auto w-full max-w-lg space-y-3">
+          <GlassCard hover={false} className="border-amber-500/30 bg-amber-500/5 py-3">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <div className="rounded-full bg-amber-500 p-1">
+                  <Star className="h-3 w-3 text-white" />
+                </div>
+                <p className="text-[0.7rem] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
+                  Upgrade to Solace Prime
+                </p>
+              </div>
+              <p className="text-[0.65rem] font-medium text-muted-foreground">$4.99 Trip Pass</p>
+            </div>
+            <p className="mt-1 text-[0.6rem] text-muted-foreground">Unlock offline maps, carbon offset certificates, and priority Solace rewards.</p>
+          </GlassCard>
+          
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <Button variant="ghost" size="lg" className="w-full sm:flex-1" onClick={() => router.push('/heatmap')}>
+              Back to map
+            </Button>
+            <Button size="lg" className="w-full sm:flex-[1.5]" onClick={handleNewTrip}>
+              Plan tomorrow →
+            </Button>
+          </div>
         </div>
       </div>
     </PageShell>

@@ -17,6 +17,7 @@ import {
   formatTripDate,
   createDefaultPreferences,
   impactStats,
+  generateSmartItinerary,
 } from '@/lib/mockData';
 import { AlertCircle, MapPin, Zap, Share2, RefreshCw } from 'lucide-react';
 import { toast } from 'sonner';
@@ -41,8 +42,7 @@ export default function ItineraryPage() {
   const cityLabel = prefs.destination.split(',')[0]?.trim() || 'Your trip';
 
   const itineraryWithDetails = useMemo(() => {
-    const source = itinerary.length ? itinerary : mockItinerary;
-    return [...source]
+    return [...itinerary]
       .sort((a, b) => a.order - b.order)
       .map((item) => {
         const attraction = mockAttractions.find(
@@ -50,7 +50,7 @@ export default function ItineraryPage() {
         );
         return { ...item, attraction };
       })
-      .filter((item) => item.attraction);
+      .filter((item) => !!item.attraction);
   }, [itinerary]);
 
   const handleReorder = (idx: number, dir: 'up' | 'down') => {
@@ -58,17 +58,22 @@ export default function ItineraryPage() {
     const newIdx = dir === 'up' ? idx - 1 : idx + 1;
     if (newIdx < 0 || newIdx >= next.length) return;
     
-    // Swap ordres
-    const temp = next[idx].order;
-    next[idx].order = next[newIdx].order;
-    next[newIdx].order = temp;
+    // Swap items
+    const temp = next[idx];
+    next[idx] = next[newIdx];
+    next[newIdx] = temp;
     
-    setItinerary(next.map(({ attraction, ...rest }) => rest));
+    // Update orders
+    const updated = next.map((item, i) => ({
+      ...item,
+      order: i + 1,
+    }));
+    
+    setItinerary(updated.map(({ attraction, ...rest }) => rest));
     toast.info('Route updated', { description: 'Recalculating wait times...' });
   };
 
   const totalTime = useMemo(() => {
-// ... existing logic ...
     return itineraryWithDetails.reduce((acc, item) => {
       const [sh, sm] = item.startTime.split(':').map(Number);
       const [eh, em] = item.endTime.split(':').map(Number);
@@ -76,24 +81,26 @@ export default function ItineraryPage() {
     }, 0);
   }, [itineraryWithDetails]);
 
-  const waitSavedLabel = `${Math.floor(impactStats.timeOptimized / 60)}h ${impactStats.timeOptimized % 60}min`;
+  const waitSavedLabel = useMemo(() => {
+    // Generate a semi-random but consistent "saved time" based on itinerary length
+    const saved = itineraryWithDetails.length * 35 + (regenKey % 15);
+    return `${Math.floor(saved / 60)}h ${saved % 60}min`;
+  }, [itineraryWithDetails, regenKey]);
 
   const handleRegenerate = useCallback(() => {
-    const sortFn = REGEN_SORTS[regenKey % REGEN_SORTS.length];
-    const next = [...mockAttractions].sort(sortFn).slice(0, 4);
-    const mapped = next.map((attr, idx) => ({
-      id: `itl${idx}-g${regenKey}`,
-      attractionId: attr.id,
-      startTime: `${9 + idx * 2}:00`,
-      endTime: `${9 + idx * 2 + 1}:30`,
-      order: idx + 1,
-    }));
+    // Simple shuffle for "re-generate" experience in prototype
+    const shuffledPrefs = { 
+      ...prefs, 
+      interests: [...prefs.interests].sort(() => Math.random() - 0.5) 
+    };
+    const mapped = generateSmartItinerary(shuffledPrefs);
+    
     setItinerary(mapped);
     setRegenKey((k) => k + 1);
     toast.success('Itinerary refreshed', {
       description: 'Stops re-ordered using a different optimisation mix.',
     });
-  }, [regenKey, setItinerary]);
+  }, [prefs, setItinerary]);
 
   const handleShare = useCallback(async () => {
     const head = `SolaceRouteAI · ${prefs.destination}\n${formatTripDate(prefs.arrivalDate)}\n\n`;
@@ -269,6 +276,35 @@ export default function ItineraryPage() {
                 {Math.floor(totalTime / 60)}h {totalTime % 60}m
               </p>
             </GlassCard>
+          </div>
+        </Reveal>
+        <Reveal delay={6}>
+          <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-primary/[0.03] p-6 shadow-sm">
+            <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-primary/10 blur-2xl" />
+            <div className="relative flex flex-col items-center text-center">
+              <div className="mb-3 inline-flex rounded-full bg-primary/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-primary">
+                Conscious Traveler Premium
+              </div>
+              <h4 className="font-display text-lg font-semibold text-foreground">
+                Go beyond the crowds
+              </h4>
+              <p className="mt-2 text-sm text-muted-foreground max-w-sm">
+                Unlock exclusive routing features as described in our business model:
+              </p>
+              <div className="mt-5 grid grid-cols-2 gap-3 w-full">
+                <div className="rounded-xl border border-border/50 bg-white/40 p-3 backdrop-blur-sm">
+                  <p className="font-semibold text-primary text-xs">Offline Sync</p>
+                  <p className="text-[10px] text-muted-foreground mt-1">Full map access without data</p>
+                </div>
+                <div className="rounded-xl border border-border/50 bg-white/40 p-3 backdrop-blur-sm">
+                  <p className="font-semibold text-primary text-xs">Curated Trails</p>
+                  <p className="text-[10px] text-muted-foreground mt-1">Ethical "Solace" routes</p>
+                </div>
+              </div>
+              <Button variant="outline" className="mt-6 border-primary/20 bg-background/50 hover:bg-primary/5" size="sm" fullWidth>
+                Upgrade to Solace Prime · $4.99
+              </Button>
+            </div>
           </div>
         </Reveal>
       </main>

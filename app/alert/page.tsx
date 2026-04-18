@@ -20,6 +20,7 @@ import {
   Star,
   Zap,
   ChevronDown,
+  Gift,
 } from 'lucide-react';
 
 export default function AlertPage() {
@@ -109,6 +110,15 @@ export default function AlertPage() {
                 <MapPin className="h-3.5 w-3.5 text-primary" />
                 0.4 km from your current location (demo)
               </p>
+              
+              {/* Incentive Banner for Rerouting */}
+              <div className="mb-4 flex items-center gap-2 rounded-xl bg-amber-500/10 p-3 ring-1 ring-amber-500/20">
+                <Gift className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                <p className="text-xs font-bold text-amber-700 dark:text-amber-300">
+                  SPECIAL OFFER: Accept this route for a FREE drink at the destination café.
+                </p>
+              </div>
+
               <p className="mb-3 text-sm italic leading-relaxed text-primary">
                 {alt.aiSuggestion}
               </p>

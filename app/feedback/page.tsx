@@ -20,6 +20,8 @@ import {
   MessageSquare,
   ShieldCheck,
   CheckCircle2,
+  ThumbsUp,
+  ThumbsDown,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -35,6 +37,7 @@ export default function FeedbackPage() {
   const reduce = useReducedMotion();
   const { setFeedback, setCurrentStep } = useTrip();
   const [satisfaction, setSatisfaction] = useState(4);
+  const [quickSentiment, setQuickSentiment] = useState<'positive' | 'negative' | null>(null);
   const [comment, setComment] = useState('');
   const [wouldRecommend, setWouldRecommend] = useState(true);
   const [crowdAccuracy, setCrowdAccuracy] = useState<CrowdAccuracy | null>(
@@ -109,8 +112,41 @@ export default function FeedbackPage() {
 
         <Reveal delay={2}>
           <GlassCard hover={false}>
+            <div className="mb-8 flex flex-col items-center gap-4">
+              <label className="text-center font-display text-sm font-semibold text-foreground">
+                How was the overall route?
+              </label>
+              <div className="flex gap-6">
+                <button
+                  type="button"
+                  onClick={() => setQuickSentiment('positive')}
+                  className={cn(
+                    "flex h-16 w-16 items-center justify-center rounded-2xl border-2 transition-all",
+                    quickSentiment === 'positive' 
+                      ? "border-primary bg-primary/10 text-primary shadow-lg shadow-primary/10 scale-110" 
+                      : "border-border/60 text-muted-foreground hover:border-primary/40"
+                  )}
+                >
+                  <ThumbsUp className={cn("h-8 w-8", quickSentiment === 'positive' && "fill-primary/20")} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setQuickSentiment('negative')}
+                  className={cn(
+                    "flex h-16 w-16 items-center justify-center rounded-2xl border-2 transition-all",
+                    quickSentiment === 'negative' 
+                      ? "border-destructive bg-destructive/10 text-destructive shadow-lg shadow-destructive/10 scale-110" 
+                      : "border-border/60 text-muted-foreground hover:border-destructive/40"
+                  )}
+                >
+                  <ThumbsDown className={cn("h-8 w-8", quickSentiment === 'negative' && "fill-destructive/20")} />
+                </button>
+              </div>
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">project.md requirement: thumbs up/down</p>
+            </div>
+
             <label className="mb-4 block text-center font-display text-sm font-semibold text-foreground sm:text-left">
-              Rate your experience
+              Detailed experience rating
             </label>
             <div className="flex justify-between gap-1 sm:justify-center sm:gap-3">
               {[1, 2, 3, 4, 5].map((star) => (

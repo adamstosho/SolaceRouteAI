@@ -55,6 +55,11 @@ export const AttractionCard = ({
             <span className="rounded-full border border-border/60 bg-muted/40 px-2.5 py-0.5 text-xs font-medium text-foreground">
               {attraction.category}
             </span>
+            {attraction.isCommunityPartner && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-primary/20 bg-primary/5 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-tight text-primary">
+                🌱 Community Partner
+              </span>
+            )}
           </div>
         </div>
         <CrowdBadge level={attraction.crowdLevel} size="sm" showLabel />

@@ -22,6 +22,7 @@ import {
   MapPin,
   AlertTriangle,
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 /** idea.md Screen 8 — DMO Dashboard Preview */
 export default function DMODashboard() {
@@ -58,10 +59,16 @@ export default function DMODashboard() {
         hint: 'Needs attention',
       },
       {
+        icon: TrendingUp,
+        label: 'Infrastructure savings',
+        value: '€14,800',
+        hint: 'This week',
+      },
+      {
         icon: Zap,
         label: 'Routes re-optimised',
         value: '1,240',
-        hint: 'Last 24h',
+        hint: 'Active logic',
       },
       {
         icon: Award,
@@ -134,30 +141,42 @@ export default function DMODashboard() {
         </Reveal>
 
         <Reveal delay={1}>
-          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-            {prdKpis.map((k, i) => (
-              <motion.div
-                key={k.label}
-                initial={reduce ? false : { opacity: 0, y: 16 }}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.06, duration: 0.45 }}
-              >
-                <GlassCard hover className="h-full shadow-sm">
-                  <div className="mb-2 flex items-center gap-2">
-                    <k.icon className="h-4 w-4 text-primary" strokeWidth={2} />
-                    <p className="text-[0.65rem] font-semibold uppercase tracking-wide text-muted-foreground">
-                      {k.label}
-                    </p>
-                  </div>
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          {[
+            ...prdKpis,
+            {
+              icon: TrendingUp,
+              label: 'Partner commissions',
+              value: '€2,410',
+              hint: 'Success-based (last 30d)',
+            }
+          ].map((k, i) => (
+            <motion.div
+              key={k.label}
+              initial={reduce ? false : { opacity: 0, y: 16 }}
+              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.06, duration: 0.45 }}
+              className={cn(i === 4 ? "col-span-2 lg:col-span-4" : "")}
+            >
+              <GlassCard hover className={cn("h-full shadow-sm", i === 4 ? "border-primary/40 bg-primary/5" : "")}>
+                <div className="mb-2 flex items-center gap-2">
+                  <k.icon className="h-4 w-4 text-primary" strokeWidth={2} />
+                  <p className="text-[0.65rem] font-semibold uppercase tracking-wide text-muted-foreground">
+                    {k.label}
+                  </p>
+                </div>
+                <div className="flex items-baseline gap-2">
                   <p className="font-display text-2xl font-bold text-foreground">
                     {k.value}
                   </p>
-                  <p className="mt-1 text-xs text-primary/90">{k.hint}</p>
-                </GlassCard>
-              </motion.div>
-            ))}
-          </div>
+                  {i === 4 && <span className="text-[0.65rem] font-bold text-primary">OWNER EARNINGS</span>}
+                </div>
+                <p className="mt-1 text-xs text-primary/90">{k.hint}</p>
+              </GlassCard>
+            </motion.div>
+          ))}
+        </div>
         </Reveal>
 
         <Reveal delay={2}>

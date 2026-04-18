@@ -17,6 +17,8 @@ import {
   mockAttractions,
   getCrowdColor,
   createDefaultPreferences,
+  generateSmartItinerary,
+  mockCityStatus,
 } from '@/lib/mockData';
 import {
   Sheet,
@@ -26,7 +28,7 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet';
 import { Checkbox } from '@/components/ui/checkbox';
-import { MapPin, SlidersHorizontal, Menu } from 'lucide-react';
+import { MapPin, SlidersHorizontal, Menu, CloudSun, Calendar } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export default function HeatmapPage() {
@@ -60,16 +62,8 @@ export default function HeatmapPage() {
   );
 
   const handleSelectAttractions = () => {
-    const pool = visibleAttractions.length > 0 ? visibleAttractions : sortedAttractions;
-    const selectedAttrs = pool.slice(0, 4);
-    const itinerary = selectedAttrs.map((attr, idx) => ({
-      id: `itl${idx}`,
-      attractionId: attr.id,
-      startTime: `${9 + idx * 2}:00`,
-      endTime: `${9 + idx * 2 + 1}:30`,
-      order: idx + 1,
-    }));
-    setItinerary(itinerary);
+    const newItinerary = generateSmartItinerary(prefs);
+    setItinerary(newItinerary);
     setCurrentStep(3);
     router.push('/itinerary');
   };
@@ -202,6 +196,33 @@ export default function HeatmapPage() {
           <p className="mt-2 text-xs font-medium uppercase tracking-widest text-primary/80">
             Step 2 of 3 · Live layer
           </p>
+        </Reveal>
+
+        {/* Live Weather & Events Status Bar */}
+        <Reveal delay={0.5}>
+          <div className="flex flex-col gap-2 rounded-2xl border border-primary/10 bg-primary/[0.03] p-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-3">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/50 shadow-sm backdrop-blur-sm">
+                <CloudSun className="h-4 w-4 text-primary" />
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Local Weather</p>
+                <p className="text-sm font-semibold text-foreground">{mockCityStatus.weather} · {mockCityStatus.temp}°C</p>
+              </div>
+            </div>
+            
+            {mockCityStatus.activeEvent && (
+              <div className="flex items-center gap-3 border-t border-primary/5 pt-2 sm:border-t-0 sm:pt-0">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
+                  <Calendar className="h-4 w-4 text-primary" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-primary">Active Event</p>
+                  <p className="text-sm font-semibold text-foreground">{mockCityStatus.activeEvent}</p>
+                </div>
+              </div>
+            )}
+          </div>
         </Reveal>
 
         <Reveal delay={1}>

@@ -1,12 +1,14 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PageShell } from '@/components/PageShell';
 import { StatusBar } from '@/components/StatusBar';
 import { WelcomeHero } from '@/components/WelcomeHero';
 import { Sparkles, BarChart3, Fingerprint, Database, Globe } from 'lucide-react';
+import { useTrip } from '@/lib/tripContext';
+import { generateSmartItinerary, createDefaultPreferences } from '@/lib/mockData';
 
 const statuses = [
   { icon: Database, text: 'Accessing live visitor sensor data...' },
@@ -18,9 +20,19 @@ const statuses = [
 
 export default function ProcessingPage() {
   const router = useRouter();
+  const { preferences, setItinerary } = useTrip();
   const [statusIdx, setStatusIdx] = useState(0);
+  const hasGenerated = useRef(false);
 
   useEffect(() => {
+    // Generate itinerary once
+    if (!hasGenerated.current) {
+      const prefs = preferences || createDefaultPreferences();
+      const newItinerary = generateSmartItinerary(prefs);
+      setItinerary(newItinerary);
+      hasGenerated.current = true;
+    }
+
     const statusTimer = setInterval(() => {
       setStatusIdx((prev) => (prev < statuses.length - 1 ? prev + 1 : prev));
     }, 1200);
@@ -33,7 +45,7 @@ export default function ProcessingPage() {
       clearInterval(statusTimer);
       clearTimeout(redirectTimer);
     };
-  }, [router]);
+  }, [router, preferences, setItinerary]);
 
   return (
     <PageShell className="flex min-h-[100dvh] flex-col items-center justify-center text-center">
